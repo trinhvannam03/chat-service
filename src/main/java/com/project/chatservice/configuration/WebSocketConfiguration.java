@@ -1,14 +1,13 @@
 package com.project.chatservice.configuration;
 
-import com.project.chatservice.components.CustomHandshakeHandler;
-import org.springframework.context.annotation.Bean;
+import com.project.chatservice.ws.CustomHandshakeHandler;
+import com.project.chatservice.ws.CustomInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.server.HandshakeHandler;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -26,12 +25,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .setAllowedOrigins("http://localhost:3000", "http://localhost:3001")
-                .setHandshakeHandler(customHandshakeHandler())
+                .setHandshakeHandler(new CustomHandshakeHandler())
+                .addInterceptors(new CustomInterceptor())
                 .withSockJS();
     }
 
-    @Bean
-    HandshakeHandler customHandshakeHandler() {
-        return new CustomHandshakeHandler();
-    }
 }

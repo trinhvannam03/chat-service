@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.chatservice.dto.MessageDTO;
 import com.project.chatservice.entities.Message;
 import com.project.chatservice.repositories.MessageRepository;
+import com.project.chatservice.ws.WsPrincipal;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -45,7 +46,6 @@ public class MessageService {
     private final ObjectMapper objectMapper;
 
     public void resolveAndForwardMessage(String message) {
-        //query all sessions and subscription available to send messages to
     }
 
 
@@ -68,18 +68,13 @@ public class MessageService {
         System.out.println("Message sent to " + message.getReceiverId());
     }
 
-
     public void logSubscriptions() {
         Set<SimpUser> users = simpUserRegistry.getUsers();
 
-        simpUserRegistry.getUsers().forEach(user -> {
-            System.out.println("User: " + user.getName());
-            user.getSessions().forEach(session -> {
-                System.out.println("  Session: " + session.getId());
-                session.getSubscriptions().forEach(subscription -> {
-                    System.out.println("    Subscription: " + subscription.getDestination());
-                });
-            });
+        users.forEach(user -> {
+            WsPrincipal wsPrincipal = (WsPrincipal) user.getPrincipal();
+            assert wsPrincipal != null;
+            System.out.println(wsPrincipal.getProfilePicture());
         });
     }
 }
