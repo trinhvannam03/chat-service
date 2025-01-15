@@ -25,7 +25,6 @@ public class UserService {
                 .email(userDTO.getEmail())
                 .userId(userDTO.getUserId())
                 .profilePicture(userDTO.getProfilePicture())
-                .fullName(userDTO.getFullName())
                 .phone(userDTO.getPhone())
                 .build();
         userRepository.save(user);

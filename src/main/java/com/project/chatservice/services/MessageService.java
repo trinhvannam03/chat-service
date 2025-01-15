@@ -5,21 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.chatservice.dto.MessageDTO;
 import com.project.chatservice.entities.Message;
 import com.project.chatservice.repositories.MessageRepository;
-import com.project.chatservice.ws.WsPrincipal;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.EventListener;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.simp.user.SimpUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.messaging.SessionSubscribeEvent;
-
-import java.util.List;
-import java.util.Set;
 
 /*
  * The two users having the same subscription path (/user/queue/messages) is
@@ -40,20 +31,14 @@ import java.util.Set;
 @Data
 public class MessageService {
     private final MessageRepository messageRepository;
-    private final SimpMessagingTemplate messagingTemplate;
-    private final SimpUserRegistry simpUserRegistry;
+//    private final SimpMessagingTemplate messagingTemplate;
+//    private final SimpUserRegistry simpUserRegistry;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public void resolveAndForwardMessage(String message) {
-    }
-
-
-    @EventListener
-    public void handleSubscribeEvent(SessionSubscribeEvent event) {
-        StompHeaderAccessor headers = StompHeaderAccessor.wrap(event.getMessage());
-        System.out.println("User subscribed to: " + headers.getDestination());
-        System.out.println("Session ID: " + headers.getSessionId());
+    public void resolveAndForward(String stringMessage) {
+        Message message = new Message();
+//        messagingTemplate.convertAndSendToUser(message.getReceiverId().toString(), "/queue/messages", message);
     }
 
 
@@ -62,20 +47,6 @@ public class MessageService {
         kafkaTemplate.send("ws_messages", message);
     }
 
-    public void sendMessage(Message message) {
-        System.out.println("Preparing to send message to " + message.getReceiverId());
-        messagingTemplate.convertAndSendToUser(message.getReceiverId().toString(), "/queue/messages", message);
-        System.out.println("Message sent to " + message.getReceiverId());
-    }
 
-    public void logSubscriptions() {
-        Set<SimpUser> users = simpUserRegistry.getUsers();
-
-        users.forEach(user -> {
-            WsPrincipal wsPrincipal = (WsPrincipal) user.getPrincipal();
-            assert wsPrincipal != null;
-            System.out.println(wsPrincipal.getProfilePicture());
-        });
-    }
 }
 

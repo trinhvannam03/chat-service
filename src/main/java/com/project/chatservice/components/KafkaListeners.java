@@ -29,6 +29,7 @@ public class KafkaListeners {
             e.printStackTrace();
         }
     }
+
     @KafkaListener(
             topics = {"ws_messages"},
             containerFactory = "wsMessageListenerContainerFactory"
@@ -37,7 +38,7 @@ public class KafkaListeners {
         String currentThreadName = Thread.currentThread().getName();
         System.out.println(currentThreadName + " received: " + message);
         try {
-            messageService.resolveAndForwardMessage(message);
+            messageService.resolveAndForward(message);
         } catch (Exception e) {
             e.printStackTrace();
         }

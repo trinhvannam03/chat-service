@@ -12,16 +12,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConversationParticipant {
+public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long conversationParticipantId;
+    private long participantId;
 
     @Column(name = "conversation_id")
     private long conversationId;
 
     @Column(name = "user_id")
     private long userId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "participant_status")
     private ParticipantStatus participantStatus;

@@ -22,11 +22,13 @@ public class User {
     private String username;
     private String email;
     private String profilePicture;
-    private String fullName;
     private String phone;
+    private String keycloakId;
+    private String firstName;
+    private String lastName;
 
     @OneToMany(mappedBy = "user")
-    List<ConversationParticipant> participants = new ArrayList<>();
+    List<Participant> participants = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "sender")
