@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Participant {
+public class ConversationParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long participantId;
