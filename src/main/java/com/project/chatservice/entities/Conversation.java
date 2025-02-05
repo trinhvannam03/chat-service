@@ -1,5 +1,6 @@
 package com.project.chatservice.entities;
 
+import com.project.chatservice.dto.ConversationDTO;
 import com.project.chatservice.enums.ConversationStatus;
 import com.project.chatservice.enums.ConversationType;
 import jakarta.persistence.*;
@@ -29,15 +30,24 @@ public class Conversation {
     @Column(name = "conversation_status")
     private ConversationStatus conversationStatus;
 
+
+    private String conversationName;
+
     @OneToMany(mappedBy = "conversation")
-    private List<Participant> participants;
+    private List<ConversationParticipant> participants;
 
     @OneToMany(mappedBy = "conversation")
     private List<Message> messages;
 
 
-
-
+    public ConversationDTO toDTO() {
+        return ConversationDTO
+                .builder()
+                .conversationId(conversationId)
+                .conversationType(conversationType)
+                .conversationStatus(conversationStatus)
+                .build();
+    }
 }
 
 

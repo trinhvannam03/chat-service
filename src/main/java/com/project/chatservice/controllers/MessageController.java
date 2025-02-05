@@ -8,14 +8,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
 
+import java.io.Serializable;
+
 @Controller
 @RequiredArgsConstructor
 public class MessageController {
+
     private final MessageService messageService;
 
     @MessageMapping("/message")
     public void sendMessage(@Payload MessageDTO messageDTO) throws JsonProcessingException {
         System.out.println(messageDTO);
-        messageService.emitMessage(messageDTO);
+        messageService.processMessage(messageDTO);
     }
 }

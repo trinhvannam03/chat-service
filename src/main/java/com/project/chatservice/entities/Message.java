@@ -27,10 +27,8 @@ public class Message {
     private Long conversationId;
 
     @Column(name = "sender_id", nullable = false)
-    private Long senderId;
+    private String senderId;
 
-    @Column(name = "receiver_id", nullable = false)
-    private Long receiverId;
 
     @Column(name = "content", length = 100000)
     private String content;
@@ -39,20 +37,17 @@ public class Message {
     @Column(name = "content_type", nullable = false)
     private ContentType contentType;
 
-    @Column(name = "sent_at", nullable = false)
-    private Timestamp sentAt;
+    @Column(name = "time_stamp", nullable = false)
+    private Timestamp timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", insertable = false, updatable = false)
-    private User sender;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id", insertable = false, updatable = false)
-    private User receiver;
+    private UserEntity sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conversation_id", insertable = false, updatable = false)
     private Conversation conversation;
+
 
 
     public MessageDTO toDTO() {

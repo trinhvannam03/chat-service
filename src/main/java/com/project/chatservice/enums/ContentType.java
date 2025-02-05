@@ -1,6 +1,8 @@
 package com.project.chatservice.enums;
 
 public enum ContentType {
-    MEDIA,
-    TEXT
+    PHOTO,
+    VIDEO,
+    TEXT,
+    UPDATE
 }

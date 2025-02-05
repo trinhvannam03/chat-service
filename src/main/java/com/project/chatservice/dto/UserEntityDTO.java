@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class UserDTO {
+public class UserEntityDTO {
     private String userEntityId;
     private String username;
     private String email;

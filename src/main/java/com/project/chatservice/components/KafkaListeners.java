@@ -17,14 +17,13 @@ public class KafkaListeners {
     /*The listener is a higher-level abstraction that provides more automation, such as
     message handling, error handling, and automatic acknowledgment of consumed messages.*/
     @KafkaListener(
-            topics = {"user_service.user_service.users"},
+            topics = {"keycloak.keycloak.users"},
             containerFactory = "databaseChangeListenerContainerFactory"
     )
     public void captureUserChange(String message) {
         try {
             String currentThreadName = Thread.currentThread().getName();
-            System.out.println(currentThreadName + " received: " + message);
-            userService.captureUserChange(message);
+            userService.syncUserEntity(message);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +35,6 @@ public class KafkaListeners {
     )
     public void listenAndForward(String message) {
         String currentThreadName = Thread.currentThread().getName();
-        System.out.println(currentThreadName + " received: " + message);
         try {
             messageService.resolveAndForward(message);
         } catch (Exception e) {

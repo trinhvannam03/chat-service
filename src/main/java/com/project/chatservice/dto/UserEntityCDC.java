@@ -3,7 +3,7 @@ package com.project.chatservice.dto;
 import lombok.Data;
 
 @Data
-public class UserEntityDTO {
+public class UserEntityCDC {
     private String ID;
     private String EMAIL;
     private String USERNAME;

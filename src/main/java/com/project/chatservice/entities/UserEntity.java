@@ -1,5 +1,6 @@
 package com.project.chatservice.entities;
 
+import com.project.chatservice.dto.UserEntityDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,26 +15,33 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@Table(name = "user_entity")
+public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private String userEntityId;
     private String username;
     private String email;
     private String profilePicture;
     private String phone;
-    private String keycloakId;
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "user")
-    List<Participant> participants = new ArrayList<>();
+    @OneToMany(mappedBy = "participant")
+    List<ConversationParticipant> participants = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "sender")
     private List<Message> sentMessages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver")
-    private List<Message> receivedMessages = new ArrayList<>();
+    public UserEntityDTO toDTO() {
+        return UserEntityDTO.builder()
+                .userEntityId(userEntityId)
+                .username(username)
+                .email(email)
+                .profilePicture(profilePicture)
+                .phone(phone)
+                .firstName(firstName)
+                .lastName(lastName)
+                .build();
+    }
 }

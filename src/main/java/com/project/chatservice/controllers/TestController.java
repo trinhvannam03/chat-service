@@ -26,12 +26,6 @@ public class TestController {
         return ResponseEntity.ok("HELLO");
     }
 
-    @PostMapping("/")
-    public ResponseEntity<MessageDTO> test(@RequestBody MessageDTO message) throws JsonProcessingException {
-        messageService.emitMessage(message);
-        return ResponseEntity.ok(message);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<WsConnection> test(@PathVariable Long id) throws JsonProcessingException {
 
@@ -49,7 +43,6 @@ public class TestController {
     @GetMapping("/{id}/get")
     public ResponseEntity<List<Object>> get(@PathVariable String id) {
         Object obj = redisTemplate.opsForValue().get("ws_connections::" + id);
-        System.out.println(obj);
 //        assert keys != null;
 //        System.out.println("There are" + keys.size() + " keys");
 //        List<Object> connections = redisTemplate.opsForValue().multiGet(keys);

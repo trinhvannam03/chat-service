@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 @Data
 public class MessageDTO {
-    private Long senderId;
-    private Long receiverId;
+    private String senderId;
     private String content;
+    private Long conversationId;
     private LocalDateTime timestamp;
     private ContentType contentType;
 }

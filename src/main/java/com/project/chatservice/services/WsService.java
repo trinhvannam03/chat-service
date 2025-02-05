@@ -30,15 +30,15 @@ public class WsService {
     @EventListener
     public void handleSubscriptionEvent(SessionSubscribeEvent event) {
         StompHeaderAccessor headers = StompHeaderAccessor.wrap(event.getMessage());
-        System.out.println("User subscribed to: " + headers.getDestination());
-        System.out.println("Session ID: " + headers.getSessionId());
+//        System.out.println("User subscribed to: " + headers.getDestination());
+//        System.out.println("Session ID: " + headers.getSessionId());
     }
 
     @EventListener
     //listen to event and save connection to redis
     public void handleConnectionEvent(SessionConnectedEvent event) {
         StompHeaderAccessor headers = StompHeaderAccessor.wrap(event.getMessage());
-        System.out.println("connection: " + headers.getUser());
+//        System.out.println("connection: " + headers.getUser());
         WsPrincipal principal = (WsPrincipal) event.getUser();
         assert principal != null;
         WsConnection wsConnection = WsConnection
